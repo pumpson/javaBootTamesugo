@@ -3,37 +3,56 @@ package com.lunacollient.www.entity;
 import java.util.Date;
 import lombok.Data;
 
+import java.io.Serializable;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * ユーザー情報 Entity
  */
+@Entity
 @Data
-public class User {
-    /**
-     * ID
-     */
-    private Long id;
-    /**
-     * 名前
-     */
-    private String name;
-    /**
-     * 住所
-     */
-    private String address;
-    /**
-     * 電話番号
-     */
-    private String phone;
-    /**
-     * 更新日時
-     */
-    private Date updateDate;
-    /**
-     * 登録日時
-     */
-    private Date createDate;
-    /**
-     * 削除日時
-     */
-    private Date deleteDate;
+@Table(name = "user")
+public class User implements Serializable {
+  /**
+   * ID
+   */
+  @Id
+  @Column(name = "id")
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
+  /**
+   * 名前
+   */
+  @Column(name = "name")
+  private String name;
+  /**
+   * 住所
+   */
+  @Column(name = "address")
+  private String address;
+  /**
+   * 電話番号
+   */
+  @Column(name = "phone")
+  private String phone;
+  /**
+   * 更新日時
+   */
+  @Column(name = "update_date")
+  private Date updateDate;
+  /**
+   * 登録日時
+   */
+  @Column(name = "create_date")
+  private Date createDate;
+  /**
+   * 削除日時
+   */
+  @Column(name = "delete_date")
+  private Date deleteDate;
 }

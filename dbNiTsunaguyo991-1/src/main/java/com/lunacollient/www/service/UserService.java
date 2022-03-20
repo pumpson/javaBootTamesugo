@@ -1,26 +1,64 @@
 package com.lunacollient.www.service;
 
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.lunacollient.www.dto.UserSearchRequest;
+import com.lunacollient.www.dto.UserRequest;
 import com.lunacollient.www.entity.User;
+import com.lunacollient.www.repository.UserRepository;
 import com.lunacollient.www.repository.UserMapper;
+
 /**
- * ƒ†[ƒU[î•ñ Service
+ * ãƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ± Service
  */
 @Service
+@Transactional(rollbackFor = Exception.class)
 public class UserService {
 	/**
-     * ƒ†[ƒU[î•ñ Mapper
+     * ãƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ± Mapper
      */
     @Autowired
     private UserMapper userMapper;
     /**
-     * ƒ†[ƒU[î•ñŒŸõ
-@@@* @param userSearchRequest ƒŠƒNƒGƒXƒgƒf[ƒ^
-     * @return ŒŸõŒ‹‰Ê
+     * ãƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ± Repository
+     */
+    @Autowired
+    private UserRepository userRepository;
+    
+    /**
+     * ãƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ±æ¤œç´¢
+ã€€ã€€ã€€* @param userSearchRequest ãƒªã‚¯ã‚¨ã‚¹ãƒˆãƒ‡ãƒ¼ã‚¿
+     * @return æ¤œç´¢çµæœ
      */
     public User search(UserSearchRequest userSearchRequest) {
         return userMapper.search(userSearchRequest);
+    }
+    
+    
+    /**
+     * ãƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ± å…¨æ¤œç´¢
+     * @return æ¤œç´¢çµæœ
+     */
+    public List<User> searchAll() {
+      return userRepository.findAll();
+    }
+    /**
+     * ãƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ± æ–°è¦ç™»éŒ²
+     * @param user ãƒ¦ãƒ¼ã‚¶ãƒ¼æƒ…å ±
+     */
+    public void create(UserRequest userRequest) {
+      Date now = new Date();
+      User user = new User();
+      user.setName(userRequest.getName());
+      user.setAddress(userRequest.getAddress());
+      user.setPhone(userRequest.getPhone());
+      user.setCreateDate(now);
+      user.setUpdateDate(now);
+      userRepository.save(user);
     }
 }
